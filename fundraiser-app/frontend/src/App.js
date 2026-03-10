@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./App.css";
 
+const API = "https://Fundraiser-Web-Application-Web-Development-Project-Suvidha-Foundation-Internship.onrender.com/api";
 function App() {
   /* ======================
      STATES
   ====================== */
-
+  
   const [fundraisers, setFundraisers] = useState([]);
   const [campaigns, setCampaigns] = useState([]);
 
@@ -32,13 +33,13 @@ function App() {
   useEffect(() => {
     // Fundraisers
     axios
-      .get("http://localhost:5000/api/fundraisers")
+      .get(`${API}/fundraisers`)
       .then((res) => setFundraisers(res.data))
       .catch((err) => console.log(err));
 
     // Campaigns
     axios
-      .get("http://localhost:5000/api/campaigns")
+      .get(`${API}/campaigns`)
       .then((res) => setCampaigns(res.data))
       .catch((err) => console.log(err));
   }, []);
@@ -53,7 +54,7 @@ function App() {
     }
 
     axios
-      .post("http://localhost:5000/api/fundraisers", { title, description, goalAmount })
+      .post(`${API}/fundraisers`, { title, description, goalAmount })
       .then((res) => {
         setFundraisers([...fundraisers, res.data]);
         setTitle(""); setDescription(""); setGoalAmount("");
@@ -95,7 +96,7 @@ function App() {
     }
 
     axios
-      .post(`http://localhost:5000/api/fundraisers/donate/${id}`, { amount: Number(amount) })
+      .post(`${API}/fundraisers/donate/${id}`, { amount: Number(amount) })
       .then((res) => {
         setFundraisers(fundraisers.map((f) => (f._id === id ? res.data : f)));
         setDonationInputs({ ...donationInputs, [id]: "" });
@@ -154,7 +155,7 @@ function App() {
   const deleteFundraiser = (id) => {
     if (!window.confirm("Delete this fundraiser?")) return;
     axios
-      .delete(`http://localhost:5000/api/fundraisers/${id}`)
+      .delete(`${API}/fundraisers/${id}`)
       .then(() => setFundraisers(fundraisers.filter((f) => f._id !== id)))
       .catch((err) => console.log(err));
   };
