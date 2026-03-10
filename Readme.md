@@ -1,142 +1,153 @@
-Fundraiser Web Application
+# Suvidha Foundation Fundraiser App
 
-A full-stack Fundraiser Web Application that allows users to create fundraising campaigns, donate to campaigns, and track progress toward funding goals.
+A web application to create, manage, and donate to campaigns and fundraisers. Built with **MERN stack** (MongoDB, Express, React, Node.js).
 
-This project was developed as part of the Suvidha Foundation Web Development Internship.
+---
 
-Features
+## Features
 
-Create new fundraising campaigns
+### Campaigns
+- Create campaigns with title, description, goal amount, and creator name.
+- Edit or delete existing campaigns.
+- Donate to campaigns and track raised amount.
+- List all campaigns with progress bars showing donation status.
 
-View all fundraisers
+### Fundraisers
+- Create fundraisers with title, description, and goal amount.
+- Edit or delete fundraisers.
+- Donate to fundraisers and track raised amount.
+- List all fundraisers with progress bars showing donation status.
 
-Donate to fundraisers
+### Additional
+- Input validation for required fields and donation amounts.
+- Responsive UI for different screen sizes.
 
-Edit fundraiser details
+---
 
-Delete fundraisers
+## Tech Stack
 
-Track donation progress with progress bars
+- **Frontend:** React.js, Axios
+- **Backend:** Node.js, Express.js
+- **Database:** MongoDB
+- **Styling:** CSS
 
-REST API integration
+---
 
-MongoDB database storage
+## Project Structure
 
-Tech Stack
-Frontend
 
-React
-
-Axios
-
-HTML
-
-CSS
-
-Backend
-
-Node.js
-
-Express.js
-
-Database
-
-MongoDB
-
-Mongoose
-
-Project Structure
-fundraiser-app
+fundraiser-app/
 │
-├── backend
-│   ├── models
-│   │   └── Fundraiser.js
-│   │
-│   ├── routes
-│   │   └── fundraisers.js
-│   │
-│   └── server.js
+├── backend/
+│ ├── config/
+│ │ └── db.js # MongoDB connection
+│ ├── models/
+│ │ └── Fundraiser.js # Fundraiser schema
+│ ├── routes/
+│ │ └── fundraisers.js # API routes for fundraisers
+│ └── server.js # Express server
 │
-├── frontend
-│   └── src
-│       └── App.js
-│
+├── frontend/
+│ ├── src/
+│ │ ├── App.js # Main React component
+│ │ ├── App.css # Styling
+│ │ └── index.js
+│ └── package.json
 └── README.md
-Installation & Setup
-1 Clone Repository
-git clone https://github.com/nakshatrameena/Fundraiser-Web-Application-Web-Development-Project-Suvidha-Foundation-Internship.git/
-cd fundraiser-app
-Backend Setup
 
-Navigate to backend folder
 
-cd backend
+---
 
-Install dependencies
+## Installation
+
+### Backend
+1. Navigate to the backend folder:
+   ```bash
+   cd backend
+
+Install dependencies:
 
 npm install
 
-Start server
+Start MongoDB locally or connect to a MongoDB Atlas cluster.
+
+Run the server:
 
 node server.js
+Frontend
 
-Server will run on
-
-http://localhost:5000
-Frontend Setup
-
-Navigate to frontend folder
+Navigate to the frontend folder:
 
 cd frontend
 
-Install dependencies
+Install dependencies:
 
 npm install
 
-Start React app
+Start the React app:
 
 npm start
 
-Frontend will run on
+Open in browser: http://localhost:3000
 
-http://localhost:3000
 API Endpoints
-Get All Fundraisers
-GET /api/fundraisers
-Create Fundraiser
-POST /api/fundraisers
-Update Fundraiser
-PUT /api/fundraisers/:id
-Donate to Fundraiser
-POST /api/fundraisers/donate/:id
-Delete Fundraiser
-DELETE /api/fundraisers/:id
-Example Fundraiser Data
-Title: Help Flood Victims
-Description: Raising funds for flood relief
-Goal Amount: 50000
-Raised Amount: 12000
-Future Improvements
+Fundraisers
+Method	Endpoint	Description
+GET	/api/fundraisers	Fetch all fundraisers
+POST	/api/fundraisers	Create a new fundraiser
+POST	/api/fundraisers/donate/:id	Donate to a fundraiser
+PUT	/api/fundraisers/:id	Update a fundraiser
+DELETE	/api/fundraisers/:id	Delete a fundraiser
+Campaigns
+Method	Endpoint	Description
+GET	/api/campaigns	Fetch all campaigns
+POST	/api/campaigns	Create a new campaign
+POST	/api/campaigns/donate/:id	Donate to a campaign
+PUT	/api/campaigns/:id	Update a campaign
+DELETE	/api/campaigns/:id	Delete a campaign
+Screenshots
 
-User authentication
 
-Payment gateway integration
 
-Image uploads for campaigns
 
-Search and filter fundraisers
 
-Admin dashboard
 
-Deployment to cloud
 
-Author
 
-Nakshatra Meena
+Contribution
 
-Web Development Intern
-Suvidha Foundation
+Fork the repository
+
+Create a branch: git checkout -b feature/your-feature
+
+Commit changes: git commit -m 'Add new feature'
+
+Push: git push origin feature/your-feature
+
+Create a pull request
 
 License
 
-This project is developed for educational and internship purposes.#
+This project is licensed under the MIT License.
+
+
+---
+
+Author
+
+NAKSHATRA MEENA
+
+WEB DEVELOPMENT INTERN SUVIDHA FOUNDATION
+
+
+✅ This README includes:
+
+- Project overview  
+- Features  
+- Tech stack  
+- Installation instructions  
+- API documentation  
+- Screenshots (optional, you can add your images in `screenshots/`)  
+- Contribution guide  
+
+---

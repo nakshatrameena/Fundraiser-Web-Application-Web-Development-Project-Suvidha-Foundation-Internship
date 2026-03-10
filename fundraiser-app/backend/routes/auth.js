@@ -1,39 +1,79 @@
 const express = require("express");
-const router = express.Router();
-const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-router.post("/register", async (req,res)=>{
+const User = require("../models/User");
 
-const {name,email,password}=req.body
+const router = express.Router();
 
-const hashed=await bcrypt.hash(password,10)
 
-const user=new User({name,email,password:hashed})
+// REGISTER
+router.post("/register", async (req, res) => {
 
-await user.save()
+  try {
 
-res.json({message:"User registered"})
+    const { name, email, password } = req.body;
 
-})
+    const userExists = await User.findOne({ email });
 
-router.post("/login", async (req,res)=>{
+    if (userExists) {
+      return res.status(400).json({ message: "User already exists" });
+    }
 
-const {email,password}=req.body
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-const user=await User.findOne({email})
+    const user = new User({
+      name,
+      email,
+      password: hashedPassword
+    });
 
-if(!user) return res.status(400).json({msg:"User not found"})
+    await user.save();
 
-const match=await bcrypt.compare(password,user.password)
+    res.json({ message: "User registered successfully" });
 
-if(!match) return res.status(400).json({msg:"Wrong password"})
+  } catch (error) {
 
-const token=jwt.sign({id:user._id},"secretkey")
+    res.status(500).json({ error: error.message });
 
-res.json({token})
+  }
 
-})
+});
 
-module.exports=router
+
+// LOGIN
+router.post("/login", async (req, res) => {
+
+  try {
+
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(400).json({ message: "Invalid email or password" });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      return res.status(400).json({ message: "Invalid email or password" });
+    }
+
+    const token = jwt.sign(
+      { id: user._id },
+      "secretkey",
+      { expiresIn: "1d" }
+    );
+
+    res.json({ token });
+
+  } catch (error) {
+
+    res.status(500).json({ error: error.message });
+
+  }
+
+});
+
+module.exports = router;

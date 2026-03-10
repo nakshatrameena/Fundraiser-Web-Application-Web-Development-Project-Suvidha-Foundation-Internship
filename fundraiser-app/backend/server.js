@@ -1,55 +1,27 @@
 const express = require("express");
 const cors = require("cors");
-const mongoose = require("mongoose");
+const connectDB = require("./config/db");
+
+const fundraiserRoutes = require("./routes/fundraisers");
+const campaignRoutes = require("./routes/campaignRoutes");
 
 const app = express();
+
+// connect database
+connectDB();
 
 // middleware
 app.use(cors());
 app.use(express.json());
 
-/* ======================
-   MongoDB Connection
-====================== */
-
-mongoose.connect("mongodb://127.0.0.1:27017/fundraiserDB")
-  .then(() => {
-    console.log("MongoDB Connected");
-  })
-  .catch((err) => {
-    console.log("MongoDB connection error:", err);
-  });
-
-mongoose.connection.once("open", () => {
-  console.log("MongoDB Connected");
-});
-
-mongoose.connection.on("error", (err) => {
-  console.log("MongoDB error:", err);
-});
-
-/* ======================
-   Routes
-====================== */
-
-const fundraiserRoutes = require("./routes/fundraisers");
-
+// routes
 app.use("/api/fundraisers", fundraiserRoutes);
+app.use("/api/campaigns", campaignRoutes);
 
-/* ======================
-   Test Route
-====================== */
-
+// test route
 app.get("/", (req, res) => {
-  res.json({ message: "Fundraiser API running" });
+  res.json({ message: "API running" });
 });
-
-/* ======================
-   Start Server
-====================== */
 
 const PORT = 5000;
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

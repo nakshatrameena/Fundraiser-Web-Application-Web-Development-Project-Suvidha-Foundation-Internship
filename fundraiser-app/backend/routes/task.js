@@ -1,39 +1,60 @@
 const express = require("express");
-const router = express.Router();
+
 const Task = require("../models/Task");
+const authMiddleware = require("../middleware/authMiddleware");
 
-router.get("/", async(req,res)=>{
+const router = express.Router();
 
-const tasks=await Task.find()
 
-res.json(tasks)
+// GET ALL TASKS
+router.get("/", authMiddleware, async (req, res) => {
 
-})
+  const tasks = await Task.find({ user: req.user.id });
 
-router.post("/", async(req,res)=>{
+  res.json(tasks);
 
-const task=new Task(req.body)
+});
 
-await task.save()
 
-res.json(task)
+// CREATE TASK
+router.post("/", authMiddleware, async (req, res) => {
 
-})
+  const { title, description } = req.body;
 
-router.put("/:id", async(req,res)=>{
+  const task = new Task({
+    title,
+    description,
+    user: req.user.id
+  });
 
-const task=await Task.findByIdAndUpdate(req.params.id,req.body,{new:true})
+  await task.save();
 
-res.json(task)
+  res.json(task);
 
-})
+});
 
-router.delete("/:id", async(req,res)=>{
 
-await Task.findByIdAndDelete(req.params.id)
+// UPDATE TASK
+router.put("/:id", authMiddleware, async (req, res) => {
 
-res.json({msg:"Task deleted"})
+  const task = await Task.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    { new: true }
+  );
 
-})
+  res.json(task);
 
-module.exports=router
+});
+
+
+// DELETE TASK
+router.delete("/:id", authMiddleware, async (req, res) => {
+
+  await Task.findByIdAndDelete(req.params.id);
+
+  res.json({ message: "Task deleted" });
+
+});
+
+module.exports = router;
