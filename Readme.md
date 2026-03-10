@@ -88,7 +88,7 @@ Start the React app:
 
 npm start
 
-Open in browser: http://localhost:3000
+Open in browser: https://fundraiser-web-application-web-fzl9.onrender.com/
 
 API Endpoints
 Fundraisers
@@ -147,7 +147,6 @@ WEB DEVELOPMENT INTERN SUVIDHA FOUNDATION
 - Tech stack  
 - Installation instructions  
 - API documentation  
-- Screenshots (optional, you can add your images in `screenshots/`)  
 - Contribution guide  
 
 ---
