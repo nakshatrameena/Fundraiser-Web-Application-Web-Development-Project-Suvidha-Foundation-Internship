@@ -1,6 +1,11 @@
 const express = require("express");
 const cors = require("cors");
 const connectDB = require("./config/db");
+const mongoose = require("mongoose");
+
+mongoose.connect(process.env.MONGO_URI)
+.then(() => console.log("MongoDB Connected"))
+.catch(err => console.log("Database connection failed:", err));
 
 const fundraiserRoutes = require("./routes/fundraisers");
 const campaignRoutes = require("./routes/campaignRoutes");
