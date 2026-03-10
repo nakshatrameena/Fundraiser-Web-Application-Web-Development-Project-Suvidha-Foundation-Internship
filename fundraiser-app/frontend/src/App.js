@@ -65,25 +65,34 @@ function App() {
   /* ======================
      CREATE CAMPAIGN
   ====================== */
-  const createCampaign = () => {
-    if (!campaignTitle || !campaignDescription || !campaignGoal || !creatorName) {
-      alert("Please fill all fields");
-      return;
-    }
 
-    axios
-      .post("http://localhost:5000/api/campaigns", {
-        title: campaignTitle,
-        description: campaignDescription,
-        goalAmount: campaignGoal,
-        creatorName: creatorName,
-      })
-      .then((res) => {
-        setCampaigns([...campaigns, res.data]);
-        setCampaignTitle(""); setCampaignDescription(""); setCampaignGoal(""); setCreatorName("");
-      })
-      .catch((err) => console.log(err));
+  const createCampaign = async () => {
+  const campaign = {
+    title: title,
+    description: description,
+    goalAmount: goalAmount,
   };
+
+  try {
+    const res = await fetch(
+      "https://fundraiser-web-application-web.onrender.com/api/campaigns",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(campaign),
+      }
+    );
+
+    const data = await res.json();
+    console.log(data);
+    alert("Campaign created successfully!");
+  } catch (error) {
+    console.error(error);
+    alert("Error creating campaign");
+  }
+};
 
   /* ======================
      DONATE FUNCTIONS
